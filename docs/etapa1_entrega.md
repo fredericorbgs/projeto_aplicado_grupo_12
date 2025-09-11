@@ -1,60 +1,60 @@
 # Dinâmica de Focos de Queimadas no Brasil (2019–2024) — **Etapa 1**
 
-**Grupo:** Ana Clara · Cid Wallace · Eduardo Machado · Frederico Ripamonte  
-**Data:** 11/09/2025  
+**Grupo:** Ana Clara · Cid Wallace · Eduardo Machado · Frederico Ripamonte
+**Data:** 11/09/2025
 **Repositório:** https://github.com/fredericorbgs/projeto_aplicado_grupo_12/
 
 ## Sumário
  
-- [Glossário](#glossário)  
-- [Objetivo do estudo](#objetivo-do-estudo)  
-- [Apresentação da organização e problema de pesquisa](#apresentação-da-organização-e-problema-de-pesquisa)  
-- [Metadados e identificação da base de dados](#metadados-e-identificação-da-base-de-dados)  
-- [Pensamento computacional no contexto organizacional](#pensamento-computacional-no-contexto-organizacional)  
-- [Cronograma e responsabilidades (Etapa 1)](#cronograma-e-responsabilidades-etapa-1)  
-- [Síntese da proposta analítica (rascunho para Etapa 2)](#síntese-da-proposta-analítica-rascunho-para-etapa-2)  
-- [Lista de Figuras](#lista-de-figuras)  
-- [Lista de Tabelas](#lista-de-tabelas)  
+- [Glossário](#glossário)
+- [Objetivo do estudo](#objetivo-do-estudo)
+- [Apresentação da organização e problema de pesquisa](#apresentação-da-organização-e-problema-de-pesquisa)
+- [Metadados e identificação da base de dados](#metadados-e-identificação-da-base-de-dados)
+- [Pensamento computacional no contexto organizacional](#pensamento-computacional-no-contexto-organizacional)
+- [Cronograma e responsabilidades (Etapa 1)](#cronograma-e-responsabilidades-etapa-1)
+- [Síntese da proposta analítica (rascunho para Etapa 2)](#síntese-da-proposta-analítica-rascunho-para-etapa-2)
+- [Lista de Figuras](#lista-de-figuras)
+- [Lista de Tabelas](#lista-de-tabelas)
 - [Referências](#referências)
 
 ## Glossário
  
-- **Foco de queimada (hotspot):** detecção por satélite de alta temperatura associada a fogo ativo.  
-- **Bioma:** grande conjunto de ecossistemas (Amazônia, Cerrado, Caatinga, Mata Atlântica, Pampa, Pantanal).  
-- **Sazonalidade:** padrão recorrente no tempo (ex.: “estação de fogo”).  
-- **Anomalia:** observação acima/abaixo do esperado considerando tendência e sazonalidade.  
+- **Foco de queimada (hotspot):** detecção por satélite de alta temperatura associada a fogo ativo.
+- **Bioma:** grande conjunto de ecossistemas (Amazônia, Cerrado, Caatinga, Mata Atlântica, Pampa, Pantanal).
+- **Sazonalidade:** padrão recorrente no tempo (ex.: “estação de fogo”).
+- **Anomalia:** observação acima/abaixo do esperado considerando tendência e sazonalidade.
 - **Data storytelling:** narrativa que integra achados, gráficos e contexto.
 
 ## Objetivo do estudo
  
-Conduzir um **estudo prático** com dois produtos:  
-1) **Análise Exploratória de Dados (AED)** de focos de queimadas no Brasil (2019–2024).  
-2) **Proposta analítica** aplicável à base, para **detecção de anomalias e priorização territorial**.
+Conduzir um **estudo prático** com dois produtos:
+1. **Análise Exploratória de Dados (AED)** de focos de queimadas no Brasil (2019–2024).
+2. **Proposta analítica** aplicável à base, para **detecção de anomalias e priorização territorial**.
 
 ## Apresentação da organização e problema de pesquisa
  
-**Organização geradora dos dados:** **INPE — Programa Queimadas** (instituição pública federal).  
-**Problema:** como **descrever e priorizar** a dinâmica espaço-temporal dos focos, identificando **biomas/UFs/municípios críticos** e **picos atípicos**?  
-**Questões-guia:**  
-- Qual a **sazonalidade** por bioma e UF entre 2019 e 2024?  
-- Quais **municípios** concentram picos recorrentes?  
+**Organização geradora dos dados:** **INPE — Programa Queimadas** (instituição pública federal).
+**Problema:** como **descrever e priorizar** a dinâmica espaço-temporal dos focos, identificando **biomas/UFs/municípios críticos** e **picos atípicos**?
+**Questões-guia:**
+- Qual a **sazonalidade** por bioma e UF entre 2019 e 2024?
+- Quais **municípios** concentram picos recorrentes?
 - Como **medir anomalias** em relação ao comportamento esperado?
 
 ## Metadados e identificação da base de dados
  
-- **Arquivos:** CSVs anuais baixados do diretório:  
-  `/queimadas/focos/csv/anual/AMS_sat_ref/`  
-- **Exemplo de colunas:**  
-  `id_bdq, foco_id, lat, lon, data_pas, pais, estado, municipio, bioma`  
-- **Período:** 2019–2024 (amostra atual).  
-- **Escopo desta etapa:** Brasil; pontos georreferenciados com data/hora (**data_pas**).  
+- **Arquivos:** CSVs anuais baixados do diretório:
+  `/queimadas/focos/csv/anual/AMS_sat_ref/`
+- **Exemplo de colunas:**
+  `id_bdq, foco_id, lat, lon, data_pas, pais, estado, municipio, bioma`
+- **Período:** 2019–2024 (amostra atual).
+- **Escopo desta etapa:** Brasil; pontos georreferenciados com data/hora (**data_pas**).
 - **Cuidados técnicos:** normalização de encoding (acentos), consistência de nomes de municípios, fusos horários/UTC, e validação de coordenadas fora do Brasil.
 
 ## Pensamento computacional no contexto organizacional
  
-- **Decomposição:** separar o problema em (i) ingestão/limpeza; (ii) agregações por bioma/UF/município; (iii) séries temporais (diário/semanal/mensal); (iv) detecção de anomalias; (v) visualização e narrativa.  
-- **Abstração/modelagem:** definir chaves `bioma|uf|municipio|data` e **métricas** (focos/dia, médias móveis 7/30, percentis).  
-- **Reconhecimento de padrões:** sazonalidade por bioma e janelas típicas de pico.  
+- **Decomposição:** separar o problema em (i) ingestão/limpeza; (ii) agregações por bioma/UF/município; (iii) séries temporais (diário/semanal/mensal); (iv) detecção de anomalias; (v) visualização e narrativa.
+- **Abstração/modelagem:** definir chaves `bioma|uf|municipio|data` e **métricas** (focos/dia, médias móveis 7/30, percentis).
+- **Reconhecimento de padrões:** sazonalidade por bioma e janelas típicas de pico.
 - **Automação:** scripts de ETL (Pandas/GeoPandas), *notebooks* de EDA e geração automática de gráficos/tabelas.
 
 ## Cronograma e responsabilidades (Etapa 1)
