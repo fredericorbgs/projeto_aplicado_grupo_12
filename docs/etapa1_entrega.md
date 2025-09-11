@@ -2,7 +2,7 @@
 
 **Grupo:** Ana Clara · Cid Wallace · Eduardo Machado · Frederico Ripamonte
 **Data:** 11/09/2025
-**Repositório:** https://github.com/fredericorbgs/projeto_aplicado_grupo_12/
+**Repositório:** [github.com/fredericorbgs/projeto_aplicado_grupo_12](https://github.com/fredericorbgs/projeto_aplicado_grupo_12/)
 
 ## Sumário
  
@@ -28,6 +28,7 @@
 ## Objetivo do estudo
  
 Conduzir um **estudo prático** com dois produtos:
+
 1. **Análise Exploratória de Dados (AED)** de focos de queimadas no Brasil (2019–2024).
 2. **Proposta analítica** aplicável à base, para **detecção de anomalias e priorização territorial**.
 
@@ -36,12 +37,13 @@ Conduzir um **estudo prático** com dois produtos:
 **Organização geradora dos dados:** **INPE — Programa Queimadas** (instituição pública federal).
 **Problema:** como **descrever e priorizar** a dinâmica espaço-temporal dos focos, identificando **biomas/UFs/municípios críticos** e **picos atípicos**?
 **Questões-guia:**
+
 - Qual a **sazonalidade** por bioma e UF entre 2019 e 2024?
 - Quais **municípios** concentram picos recorrentes?
 - Como **medir anomalias** em relação ao comportamento esperado?
 
 ## Metadados e identificação da base de dados
- 
+
 - **Arquivos:** CSVs anuais baixados do diretório:
   `/queimadas/focos/csv/anual/AMS_sat_ref/`
 - **Exemplo de colunas:**
@@ -51,14 +53,14 @@ Conduzir um **estudo prático** com dois produtos:
 - **Cuidados técnicos:** normalização de encoding (acentos), consistência de nomes de municípios, fusos horários/UTC, e validação de coordenadas fora do Brasil.
 
 ## Pensamento computacional no contexto organizacional
- 
+
 - **Decomposição:** separar o problema em (i) ingestão/limpeza; (ii) agregações por bioma/UF/município; (iii) séries temporais (diário/semanal/mensal); (iv) detecção de anomalias; (v) visualização e narrativa.
 - **Abstração/modelagem:** definir chaves `bioma|uf|municipio|data` e **métricas** (focos/dia, médias móveis 7/30, percentis).
 - **Reconhecimento de padrões:** sazonalidade por bioma e janelas típicas de pico.
 - **Automação:** scripts de ETL (Pandas/GeoPandas), *notebooks* de EDA e geração automática de gráficos/tabelas.
 
 ## Cronograma e responsabilidades (Etapa 1)
- 
+
 | Data | Atividade | Responsável | Marco |
 |---|---|---|---|
 | 11/09 | Repo criado + README + relatório Etapa 1 | Frederico (PM) / Ana (Doc) | **Entrega Etapa 1** |
@@ -71,7 +73,7 @@ Conduzir um **estudo prático** com dois produtos:
 | 07/10 | Checkpoint com professor | Frederico | OK |
 
 ## Síntese da proposta analítica (rascunho para Etapa 2)
- 
+
 - **Objetivo:** detectar **dias/locais anômalos** por bioma/UF/município.  
 - **Método-base:** séries agregadas (diário/semanal) com **tendência + sazonalidade** (média móvel/ETS) e **z-score robusto** para flag de picos; ranking por **desvio relativo** e **percentil**.  
 - **Saídas:**  
@@ -80,17 +82,17 @@ Conduzir um **estudo prático** com dois produtos:
 - **Validação:** checagem histórica de períodos de pico (ex.: meses secos) e comparação entre anos (2019–2024).
 
 ## Lista de Figuras
- 
+
 - **Figura 1.** Mapa de referência do Brasil por bioma (a inserir na Etapa 2).  
 - **Figura 2.** Série temporal agregada (focos/dia) por bioma (a inserir).  
 
 ## Lista de Tabelas
- 
+
 - **Tabela 1.** Dicionário de colunas mínimas do CSV (esta seção).  
 - **Tabela 2.** Cronograma de atividades (seção anterior).
 
 ## Referências
- 
+
 - INPE — Programa Queimadas (página e documentação pública).  
 - Documentação dos arquivos CSV (metadados oficiais do INPE).  
 - Materiais da disciplina (Etapas 1–4: objetivo, EDA e data storytelling).
