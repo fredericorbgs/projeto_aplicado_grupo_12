@@ -14,7 +14,6 @@
 Desenvolver um estudo prático com dois produtos:
 
 1) **Análise Exploratória de Dados (AED)** dos focos de queimadas no Brasil 
-
 (2019–2024).  
 2) **Proposta analítica** aplicável ao conjunto de dados selecionado (detecção de anomalias e priorização territorial).
 
