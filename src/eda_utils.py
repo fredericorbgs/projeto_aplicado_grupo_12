@@ -172,7 +172,7 @@ def plot_boxplot_by_bioma(df: pd.DataFrame) -> None:
     biomas = sorted(by_day_bioma[bioma_col].unique())
     data_to_plot = [by_day_bioma[by_day_bioma[bioma_col] == b]["focos"] for b in biomas]
     
-    ax.boxplot(data_to_plot, labels=biomas, patch_artist=True)
+    ax.boxplot(data_to_plot, tick_labels=biomas, patch_artist=True)
     ax.set_title("Distribuição de focos diários por Bioma")
     ax.set_ylabel("Focos por dia")
     ax.set_xlabel("Bioma")
