@@ -129,8 +129,11 @@ def plot_series_by_bioma(df: pd.DataFrame) -> None:
         print("  ⚠ Coluna 'bioma' não encontrada, pulando gráfico por bioma")
         return
     
+    # Filter out NaN/null bioma values
+    df_filtered = df[df[bioma_col].notna() & (df[bioma_col] != 'Nan') & (df[bioma_col] != 'nan')].copy()
+    
     # Agregar por dia e bioma
-    by_day_bioma = df.groupby(["day", bioma_col]).size().reset_index(name="focos")
+    by_day_bioma = df_filtered.groupby(["day", bioma_col]).size().reset_index(name="focos")
     by_day_bioma["day"] = pd.to_datetime(by_day_bioma["day"])
     
     # Plotar
@@ -166,7 +169,10 @@ def plot_boxplot_by_bioma(df: pd.DataFrame) -> None:
         print("  ⚠ Coluna 'bioma' não encontrada, pulando boxplot")
         return
     
-    by_day_bioma = df.groupby(["day", bioma_col]).size().reset_index(name="focos")
+    # Filter out NaN/null bioma values
+    df_filtered = df[df[bioma_col].notna() & (df[bioma_col] != 'Nan') & (df[bioma_col] != 'nan')].copy()
+    
+    by_day_bioma = df_filtered.groupby(["day", bioma_col]).size().reset_index(name="focos")
     
     fig, ax = plt.subplots(figsize=(10, 6))
     biomas = sorted(by_day_bioma[bioma_col].unique())
