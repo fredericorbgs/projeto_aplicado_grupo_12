@@ -16,6 +16,21 @@ dist/
 # macOS
 .DS_Store
 
-# Data
-data/raw/*
-!data/raw/.gitkeep
+# Data - arquivos pesados e temporários
+data/raw/
+data/processed/*.parquet
+*.ipynb_checkpoints/
+
+# LaTeX
+*.aux
+*.log
+*.out
+*.toc
+*.lof
+*.lot
+*.gz
+*.synctex(busy)
+*.synctex.gz
+
+# Temporários
+figs/eda/*.tmp

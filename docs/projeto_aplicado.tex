@@ -1,0 +1,289 @@
+\documentclass[12pt,a4paper]{report}
+
+% -------------------- Codificação, idioma e fontes --------------------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[brazil]{babel}
+\usepackage{lmodern}
+
+% -------------------- Geometria e ajustes ----------------------------
+\usepackage{geometry}
+\geometry{margin=2.5cm}
+\emergencystretch=2em % ajuda a evitar overfulls sem afetar o layout
+
+% -------------------- Gráficos e tabelas -----------------------------
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{caption}
+
+% -------------------- Fluxo/pipeline ---------------------------------
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,shapes,fit}
+
+% -------------------- Listagens (exemplos CSV com acentos) -----------
+\usepackage{listings}
+\lstset{
+  basicstyle=\ttfamily\small,
+  breaklines=true,
+  columns=fullflexible,
+  showstringspaces=false,
+  inputencoding=utf8,
+  extendedchars=true,
+  literate=
+   {á}{{\'a}}1 {Á}{{\'A}}1
+   {é}{{\'e}}1 {É}{{\'E}}1
+   {í}{{\'\i}}1 {Í}{{\'I}}1
+   {ó}{{\'o}}1 {Ó}{{\'O}}1
+   {ú}{{\'u}}1 {Ú}{{\'U}}1
+   {â}{{\^a}}1 {Â}{{\^A}}1
+   {ê}{{\^e}}1 {Ê}{{\^E}}1
+   {ô}{{\^o}}1 {Ô}{{\^O}}1
+   {ã}{{\~a}}1 {Ã}{{\~A}}1
+   {õ}{{\~o}}1 {Õ}{{\~O}}1
+   {à}{{\`a}}1 {À}{{\`A}}1
+   {ç}{{\c c}}1 {Ç}{{\c C}}1
+   {ü}{{\"u}}1 {Ü}{{\"U}}1
+}
+
+% -------------------- Hiperlinks (com quebras em URLs) ---------------
+\PassOptionsToPackage{hyphens}{url}
+\usepackage[colorlinks=true,linkcolor=black,urlcolor=blue]{hyperref}
+\Urlmuskip=0mu plus 1mu
+\def\UrlBreaks{\do\/\do\-\do\_\do\.\do\?\do\&\do\=\do\%\do\#}
+
+% -------------------- Metadados do trabalho --------------------------
+\newcommand{\titulo}{Dinâmica de Focos de Queimadas no Brasil (2019--2024)}
+\newcommand{\curso}{Banco de Dados -- Projeto Aplicado I}
+\newcommand{\instituicao}{Universidade Presbiteriana Mackenzie}
+\newcommand{\grupo}{Ana Clara Silva de Souza; Cid Wallace Araujo de Oliveira; Eduardo Machado Silva; Frederico Ripamonte Borges}
+\newcommand{\repositorio}{\url{https://github.com/fredericorbgs/projeto_aplicado_grupo_12/}}
+\newcommand{\dataentrega}{Etapa 2}
+
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{3}
+
+% -------------------- Início -----------------------------------------
+\begin{document}
+
+% -------------------- Capa (evita warning de âncora duplicada) -------
+\hypersetup{pageanchor=false}
+\begin{titlepage}
+  \centering
+  {\Large \instituicao\par}
+  \vspace{1.5cm}
+  {\large \curso\par}
+  \vspace{3cm}
+  {\LARGE\bfseries \titulo\par}
+  \vspace{2cm}
+  {\large \textbf{Etapa 2 -- Proposta Analítica e Análise Exploratória}\par}
+  \vspace{2cm}
+  {\large \textbf{Grupo:} \grupo\par}
+  \vfill
+  {\large \textbf{Repositório:} \repositorio\par}
+  \vspace{1cm}
+  {\large \dataentrega\par}
+\end{titlepage}
+\hypersetup{pageanchor=true}
+
+% -------------------- Pré-textuais -----------------------------------
+\pagenumbering{roman}
+\tableofcontents
+\listoffigures
+\listoftables
+\cleardoublepage
+\pagenumbering{arabic}
+
+% -------------------- Introdução -------------------------------------
+\chapter*{Introdução}
+\addcontentsline{toc}{chapter}{Introdução}
+
+Dando sequência à Etapa 1 (organização, objetivos, cronograma e metadados), esta \textbf{Etapa 2} inclui: (i) a \textbf{Proposta Analítica} detalhada --- com problema, hipóteses, métrica-alvo e \textit{pipeline} de dados --- e (ii) a \textbf{Análise Exploratória de Dados (AED)}, alinhada aos notebooks Python presentes no repositório. O foco é descrever variáveis, sumarizar medidas de posição/dispersão, distribuição, dados ausentes e outliers, ilustrando com gráficos.
+
+% -------------------- Cap. 1: Organização (resumo) -------------------
+\chapter{Organização e Contexto (Resumo da Etapa 1)}
+
+\section{Organização}
+\textbf{INPE -- Programa Queimadas}. Missão: monitorar e disponibilizar informações sobre focos de queimadas/incêndios no Brasil, apoiando políticas públicas e gestão ambiental.
+
+\section{Área de Atuação}
+Monitoramento ambiental e gestão de riscos, com ênfase na dinâmica \textbf{espaço-temporal} de focos de calor por \textbf{bioma}, \textbf{UF} e \textbf{município}.
+
+\section{Problema de Pesquisa}
+Como \textbf{caracterizar e priorizar} a dinâmica de focos de queimadas (2019--2024), identificando \textbf{sazonalidade}, \textbf{picos atípicos} (anomalias) e \textbf{áreas críticas}?
+
+% -------------------- Cap. 2: Objetivos -------------------------------
+\chapter{Objetivos do Projeto}
+
+\section{Objetivo Geral}
+Produzir: (i) \textbf{AED} 2019--2024 e (ii) \textbf{proposta analítica} para \textit{detecção de anomalias} e \textit{priorização territorial}.
+
+\section{Objetivos Específicos}
+\begin{itemize}
+  \item Descrever sazonalidade e variação temporal por bioma/UF/município.
+  \item Identificar municípios críticos por frequência/intensidade de picos.
+  \item Definir método simples e explicável para alertas (tendência+sazonalidade + escore robusto).
+  \item Preparar \textit{data storytelling} orientado à decisão (Etapa 3).
+\end{itemize}
+
+% -------------------- Cap. 3: Metadados (reforçado) -------------------
+\chapter{Dataset e Metadados (Detalhados)}
+
+\section{Arquivos e Estrutura}
+CSVs anuais 2019--2024 em \texttt{data/raw/queimadas/}. Consolidado em \texttt{data/processed/focos\_2019\_2024.parquet}.
+
+\section{Esquema de Campos (colunas principais)}
+\begin{table}[h]
+\centering
+\caption{Dicionário de dados (reforçado)}
+\label{tab:dicionario}
+\begin{tabular}{p{3.2cm} p{3cm} p{3.5cm} p{6.5cm}}
+\toprule
+\textbf{Coluna} & \textbf{Tipo} & \textbf{Exemplo} & \textbf{Descrição / Observações}\\
+\midrule
+\texttt{id\_bdq} & inteiro/ID & 1536654192 & Identificador interno do banco de queimadas (chave técnica).\\
+\texttt{foco\_id} & UUID/str & c7ad19f5-... & Identificador único do foco observado.\\
+\texttt{data\_pas} & datetime & 2021-04-27 16:35:00 & Data/hora (UTC) do registro; base para agregações por dia/semana/mês.\\
+\texttt{lat} & float & -15.27 & Latitude (graus decimais). Validação em [-33.8, 5.3] aprox. (território BR).\\
+\texttt{lon} & float & -40.894 & Longitude (graus decimais). Validação em [-74.1, -32.4] aprox. (BR).\\
+\texttt{pais} & str (cat.) & Brasil & País de referência.\\
+\texttt{estado} & str (cat.) & Bahia & UF padronizada (sigla/por extenso, harmonizada no \textit{ETL}).\\
+\texttt{municipio} & str (cat.) & Vitória da Conquista & Município normalizado (acentos/unicode e \textit{case}).\\
+\texttt{bioma} & str (cat.) & Mata Atlântica & Bioma do foco (ex.: Amazônia, Cerrado, Caatinga, Pampa, Pantanal, Mata Atlântica).\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\noindent\textbf{Qualidade e Tratamento:} normalização de encoding (UTF-8), remoção/ajuste de coordenadas inválidas, padronização de nomes de municípios/UF, \textit{cast} de datas e geração de chaves derivadas (dia, semana ISO, mês, ano, bioma\_uf).
+
+\section{Exemplo de Linha (CSV)}
+\begin{lstlisting}
+1536654192, c7ad19f5-cd70-35ed-85e0-35ca4f09f03b, -15.270000, -40.894000, 2021-04-27 16:35:00, Brasil, Bahia, Vitória da Conquista, Mata Atlântica
+\end{lstlisting}
+
+% -------------------- Cap. 4: Proposta Analítica ----------------------
+\chapter{Proposta Analítica}
+
+\section{Visão Geral}
+\textbf{Problema:} detectar picos atípicos de focos por unidade territorial, sinalizando \textbf{anomalias} em relação ao comportamento esperado (tendência + sazonalidade).  
+\textbf{Unidades de análise:} bioma, UF e município.  
+\textbf{Série base:} contagem de focos por dia (ou semana) por unidade.
+
+\section{Hipóteses e Métricas}
+\begin{itemize}
+  \item \textbf{H1} Sazonalidade: existe padrão de alta na estação seca por bioma/UF.
+  \item \textbf{H2} Anomalias: picos fora do envelope sazonal (limites robustos) indicam eventos críticos.
+  \item \textbf{Métricas} por série: média, mediana, desvio padrão, variância, IQR, coeficiente de variação (CV), \% acima da banda.
+\end{itemize}
+
+\section{Método (explicável)}
+\begin{enumerate}
+  \item Agregar focos por dia/semana e por unidade.
+  \item Decompor série em tendência+sazonalidade \emph{via} médias móveis (ETS simples opcional).
+  \item Calcular bandas de referência (mediana $\pm$ $k\cdot\mathrm{MAD}$ ou IQR) e \textit{z-score} robusto.
+  \item Rotular anomalias (limiar: $|z|\ge 3$ ou acima da banda superior ajustada).
+  \item Gerar \textbf{ranking} de criticidade e painel (mapa + séries).
+\end{enumerate}
+
+\section{Pipeline de Dados}
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[node distance=10mm, >=Latex, font=\small]
+\tikzstyle{proc}=[rectangle, rounded corners, draw, align=center, minimum width=32mm, minimum height=9mm]
+\tikzstyle{data}=[cylinder, shape border rotate=90, draw, aspect=0.25, minimum height=11mm, minimum width=17mm, align=center]
+\node[data] (raw) {CSV\\ 2019--2024};
+\node[proc, right=12mm of raw] (ing) {Ingestão \&\\ Limpeza};
+\node[data, right=12mm of ing] (parq) {Parquet\\ consolidado};
+\node[proc, right=12mm of parq] (agg) {Agregações\\ diárias/semanais};
+\node[proc, right=12mm of agg] (anom) {Bandas \&\\ Anomalias};
+\node[proc, below=12mm of agg, xshift=12mm] (viz) {Figuras \& Tabelas};
+\draw[->] (raw) -- (ing);
+\draw[->] (ing) -- (parq);
+\draw[->] (parq) -- (agg);
+\draw[->] (agg) -- (anom);
+\draw[->] (anom) -- (viz);
+\end{tikzpicture}
+\caption{Pipeline de dados da proposta analítica (scripts em \texttt{src/} e notebook em \texttt{notebooks/}).}
+\label{fig:pipeline}
+\end{figure}
+
+\section{Resultados Esperados}
+\begin{itemize}
+  \item Séries por bioma/UF/município com envelope sazonal e \% de excesso.
+  \item Lista priorizada de unidades com picos recentes e recorrência histórica.
+  \item Painel com mapas (coroplético) e \textit{sparklines} temporais.
+\end{itemize}
+
+% -------------------- Cap. 5: Análise Exploratória --------------------
+\chapter{Análise Exploratória de Dados (AED)}
+
+\section{Perguntas-Guia}
+\begin{itemize}
+  \item Quantidade de linhas/colunas e tipos de dados.
+  \item Medidas de posição e dispersão (média, mediana, quartis, desvio, variância, CV).
+  \item Distribuição e frequência; correlações.
+  \item Valores ausentes, inconsistências; anomalias/outliers.
+\end{itemize}
+
+\section{Resumo da Amostra}
+\noindent\textbf{Linhas/colunas, tipos e ausentes} (gerado por \texttt{notebooks/EDA\_queimadas\_etapa2.ipynb}):  
+\begin{itemize}
+  \item Tabela \textbf{\texttt{data/processed/resumo\_colunas.csv}} (\#linhas, tipo, NAs, únicos, min/max).
+  \item Estatísticas gerais em \textbf{\texttt{data/processed/estatisticas\_gerais.csv}}.
+\end{itemize}
+
+\section{Medidas de Posição e Dispersão}
+\begin{table}[h]
+\centering
+\caption{Exemplo de estatísticas (saída do notebook)}
+\label{tab:stats}
+\begin{tabular}{lrrrrrr}
+\toprule
+\textbf{Variável} & \textbf{count} & \textbf{min} & \textbf{p50} & \textbf{max} & \textbf{std} & \textbf{CV} \\
+\midrule
+focos\_dia (bioma=Amazônia) & \multicolumn{6}{c}{\emph{(auto-preenchido pelo notebook)}}\\
+focos\_dia (bioma=Cerrado)  & \multicolumn{6}{c}{\emph{idem}}\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Distribuições e Correlações}
+\begin{figure}[h]
+\centering
+\fbox{\begin{minipage}[c][5.2cm][c]{0.92\linewidth}\centering
+Histograma de focos/dia e Boxplots por bioma (gerados em \texttt{figs/eda/})
+\end{minipage}}
+\caption{Distribuições e boxplots.}
+\label{fig:dist}
+\end{figure}
+
+\section{Séries Temporais e Sazonalidade}
+\begin{figure}[h]
+\centering
+\fbox{\begin{minipage}[c][5.2cm][c]{0.92\linewidth}\centering
+Séries por bioma/UF com médias móveis e envelope sazonal
+\end{minipage}}
+\caption{Séries temporais diárias/semanais.}
+\label{fig:series}
+\end{figure}
+
+\section{Outliers e Anomalias (prévia)}
+Identificação por \textbf{IQR} e por \textbf{z-score robusto} (MAD). Listas em \texttt{data/processed/anomalias\_top.csv}. Gráficos com pontos destacados em \texttt{figs/eda/}.
+
+% -------------------- Cap. 6: Repositório -----------------------------
+\chapter{Repositório e Alinhamento}
+
+\noindent \textbf{Repositório:} \repositorio
+
+\noindent\textbf{Estrutura (alto nível)}: \texttt{data/raw}, \texttt{data/processed}, \texttt{src}, \texttt{notebooks}, \texttt{figs/eda}, \texttt{docs}.  
+Scripts e notebook foram desenvolvidos em Python, com comentários, boas práticas e geração automática de artefatos referenciados neste relatório.
+
+% -------------------- Referências -------------------------------------
+\chapter*{Referências}
+\addcontentsline{toc}{chapter}{Referências}
+INPE -- Programa Queimadas (documentação pública).\\
+Materiais e orientações do componente curricular.\\
+Repositório do projeto: \repositorio
+
+\end{document}

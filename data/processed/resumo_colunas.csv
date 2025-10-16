@@ -1,0 +1,17 @@
+coluna,tipo,n_missing,pct_missing,n_unique,min,max
+id_bdq,int64,0,0.0,2008071,790826750.0,1739558151.0
+foco_id,object,0,0.0,2008071,,
+lat,float64,0,0.0,1032731,-33.8,5.3
+lon,float64,0,0.0,1045203,-74.1,-34.816
+data_pas,object,0,0.0,15993,,
+pais,object,0,0.0,12,,
+estado,object,0,0.0,126,,
+municipio,object,0,0.0,5992,,
+bioma,object,0,0.0,7,,
+_source_file,object,0,0.0,6,,
+date,datetime64[ns],0,0.0,15993,,
+year,int32,0,0.0,6,2019.0,2024.0
+month,int32,0,0.0,12,1.0,12.0
+week_iso,UInt32,0,0.0,53,1.0,53.0
+day,object,0,0.0,2174,,
+bioma_uf,object,0,0.0,150,,
