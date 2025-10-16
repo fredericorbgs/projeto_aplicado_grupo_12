@@ -45,6 +45,94 @@ Como **caracterizar a dinâmica espaço-temporal** dos focos de calor no Brasil,
 - **Saídas:** ranking de **áreas críticas** com percentis e bandas de confiança; painel com *sparkline* por bioma/UF/município.  
 - **Métricas:** precisão na identificação de picos históricos conhecidos; estabilidade das faixas (backtesting simples).
 
+## Etapa 2 - Implementação Completa ✅
+
+### Estrutura do Repositório
+
+```
+projeto_aplicado_grupo_12/
+├── data/
+│   ├── raw/queimadas/          # CSVs originais (2019-2024, não versionados)
+│   └── processed/              # Dados processados e artefatos CSV
+│       ├── focos_2019_2024.parquet  # Dataset consolidado (108 MB)
+│       ├── resumo_colunas.csv
+│       ├── estatisticas_gerais.csv
+│       └── anomalias_top.csv
+├── figs/eda/                   # Figuras geradas pela análise
+│   ├── series_bioma.png
+│   ├── boxplot_bioma.png
+│   └── top10_uf.png
+├── src/                        # Scripts Python
+│   ├── pipeline_ingestao.py   # ETL e consolidação dos CSVs
+│   └── eda_utils.py           # Análise exploratória e visualizações
+├── notebooks/                  # Notebooks Jupyter
+│   ├── EDA_inicial.ipynb
+│   └── EDA_queimadas_etapa2.ipynb  # Notebook da Etapa 2
+├── docs/                       # Documentação LaTeX
+│   ├── projeto_aplicado.tex   # Documento principal
+│   ├── projeto_aplicado.pdf   # PDF compilado (15 páginas)
+│   ├── cronograma.md
+│   └── etapa1_entrega.md
+└── requirements.txt            # Dependências Python
+```
+
+### Como Executar
+
+#### 1. Instalar Dependências
+
+```bash
+pip install -r requirements.txt
+```
+
+#### 2. Executar Pipeline de Ingestão
+
+Consolida os CSVs anuais (2019-2024) em um único arquivo Parquet:
+
+```bash
+python -m src.pipeline_ingestao
+```
+
+**Saída:**
+- `data/processed/focos_2019_2024.parquet` (2.008.071 registros limpos)
+
+#### 3. Executar Análise Exploratória
+
+Gera estatísticas, figuras e detecção de anomalias:
+
+```bash
+python -m src.eda_utils
+```
+
+**Saídas:**
+- `data/processed/resumo_colunas.csv`
+- `data/processed/estatisticas_gerais.csv`
+- `data/processed/anomalias_top.csv`
+- `figs/eda/*.png` (3 figuras)
+
+#### 4. Explorar com Jupyter Notebook
+
+```bash
+jupyter notebook notebooks/EDA_queimadas_etapa2.ipynb
+```
+
+#### 5. Compilar Documento LaTeX
+
+```bash
+cd docs/
+pdflatex projeto_aplicado.tex
+pdflatex projeto_aplicado.tex  # Segunda compilação para referências
+```
+
+**Saída:** `docs/projeto_aplicado.pdf`
+
+### Artefatos da Etapa 2
+
+- 📊 **Dataset consolidado**: 2M+ registros de focos (2019-2024)
+- 📈 **3 figuras principais**: séries temporais, boxplots, rankings
+- 📝 **4 CSVs de análise**: resumos, estatísticas e anomalias
+- 📄 **Documento PDF**: 15 páginas com proposta analítica e AED completa
+- 💻 **Código Python**: scripts modulares e notebook reproduzível
+
 ## Cronograma (Etapa 1)
 
 Ver `docs/cronograma.md` para atividades, datas, responsáveis e milestones.
