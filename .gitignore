@@ -34,3 +34,17 @@ data/processed/*.parquet
 
 # Temporários
 figs/eda/*.tmp
+
+# Arquivos de diagnóstico e resumo (opcional - podem ser commitados)
+# ETAPA3_RESUMO.md
+# EXECUCOES_DIAGNOSTICO.md
+
+# PDFs grandes (manter apenas se necessário)
+# PROJ_APLIC_I_AULA_3_Storytelling.pdf
+
+# Arquivos de backup
+*.backup
+requirements.txt.backup
+
+# Arquivos LaTeX duplicados na raiz
+projeto_aplicado.tex
