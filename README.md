@@ -137,6 +137,220 @@ pdflatex projeto_aplicado.tex  # Segunda compilação para referências
 
 Ver `docs/cronograma.md` para atividades, datas, responsáveis e milestones.
 
-## Data Storytelling (visão — Etapa 3)
+## Etapa 3 - Data Storytelling ✅
 
-Três atos: **Onde e quando ocorre** (mapas e séries) → **Quão atípico é** (anomalias) → **O que priorizar** (ranking e recomendações).
+### Implementação Completa
+
+A Etapa 3 implementa o **Data Storytelling** completo com narrativa estruturada, visualizações avançadas e documentação detalhada para a apresentação final.
+
+### Estrutura Atualizada do Repositório
+
+```
+projeto_aplicado_grupo_12/
+├── data/
+│   ├── raw/queimadas/          # CSVs originais (2019-2024, não versionados)
+│   ├── interim/                # Dados intermediários (não versionados)
+│   └── processed/              # Dados processados e artefatos CSV
+│       ├── focos_2019_2024.parquet  # Dataset consolidado (108 MB, não versionado)
+│       ├── resumo_colunas.csv
+│       ├── estatisticas_gerais.csv
+│       └── anomalias_top.csv
+├── figs/
+│   ├── eda/                    # Figuras da análise exploratória
+│   │   ├── series_bioma.png
+│   │   ├── boxplot_bioma.png
+│   │   └── top10_uf.png
+│   └── storytelling/           # Figuras para apresentação (Etapa 3)
+│       ├── timeline_anomalies.png
+│       ├── series_envelope_bioma.png
+│       ├── heatmap_temporal.png
+│       ├── ranking_criticidade_municipios.png
+│       └── anomalies_by_bioma.png
+├── src/                        # Scripts Python
+│   ├── pipeline_ingestao.py   # ETL e consolidação dos CSVs
+│   ├── eda_utils.py           # Análise exploratória e visualizações básicas
+│   ├── storytelling_viz.py    # Visualizações de storytelling (Etapa 3) ⭐ NOVO
+│   ├── cleaning.py            # Utilitários de limpeza
+│   ├── io_utils.py            # Utilitários de I/O
+│   └── plotting.py            # Funções auxiliares de plotagem
+├── notebooks/                  # Notebooks Jupyter
+│   ├── EDA_inicial.ipynb
+│   ├── EDA_queimadas_etapa2.ipynb
+│   ├── 01_ingestao_validacao.ipynb
+│   ├── 02_aed_univariada.ipynb
+│   ├── 03_aed_temporal_espacial.ipynb
+│   └── 04_proposta_analitica_demo.ipynb
+├── docs/                       # Documentação LaTeX
+│   ├── projeto_aplicado.tex   # Documento da Etapa 2
+│   ├── projeto_etapa3.tex     # Documento da Etapa 3 ⭐ NOVO
+│   ├── compilar.sh            # Script de compilação LaTeX ⭐ NOVO
+│   ├── INSTRUCOES_COMPILACAO.md  # Instruções de compilação ⭐ NOVO
+│   ├── cronograma.md
+│   └── etapa1_entrega.md
+├── requirements.txt            # Dependências Python
+├── GUIA_GIT.md                # Guia para atualizar o repositório ⭐ NOVO
+└── atualizar_git.sh           # Script para atualizar Git ⭐ NOVO
+```
+
+### Como Executar - Etapa 3
+
+#### 1. Instalar Dependências (atualizado)
+
+```bash
+pip install -r requirements.txt
+```
+
+**Novas dependências adicionadas:**
+- `seaborn>=0.13` - Visualizações avançadas
+- `jupyter>=1.0` - Notebooks Jupyter
+- `ipykernel>=6.29` - Kernel Jupyter
+
+#### 2. Executar Pipeline de Ingestão (se necessário)
+
+```bash
+python -m src.pipeline_ingestao
+```
+
+**Saída:**
+- `data/processed/focos_2019_2024.parquet` (2.008.071 registros limpos, 108 MB)
+
+#### 3. Executar Análise Exploratória Básica
+
+```bash
+python -m src.eda_utils
+```
+
+**Saídas:**
+- `data/processed/resumo_colunas.csv`
+- `data/processed/estatisticas_gerais.csv`
+- `data/processed/anomalias_top.csv`
+- `figs/eda/*.png` (3 figuras)
+
+#### 4. Gerar Visualizações de Storytelling ⭐ NOVO
+
+```bash
+python -m src.storytelling_viz
+```
+
+**Saídas:**
+- `figs/storytelling/timeline_anomalies.png` - Linha do tempo de picos anômalos
+- `figs/storytelling/series_envelope_bioma.png` - Séries com envelope sazonal
+- `figs/storytelling/heatmap_temporal.png` - Heatmap temporal (mês/ano)
+- `figs/storytelling/ranking_criticidade_municipios.png` - Ranking Top 15 municípios
+- `figs/storytelling/anomalies_by_bioma.png` - Distribuição de anomalias por bioma
+
+#### 5. Explorar com Jupyter Notebooks
+
+```bash
+jupyter notebook notebooks/
+```
+
+**Notebooks disponíveis:**
+- `EDA_queimadas_etapa2.ipynb` - Análise exploratória da Etapa 2
+- `01_ingestao_validacao.ipynb` - Validação de ingestão
+- `02_aed_univariada.ipynb` - AED univariada
+- `03_aed_temporal_espacial.ipynb` - AED temporal e espacial
+- `04_proposta_analitica_demo.ipynb` - Demonstração da proposta analítica
+
+#### 6. Compilar Documento LaTeX da Etapa 3
+
+**Opção A: Usando o script (recomendado)**
+
+```bash
+cd docs/
+./compilar.sh
+```
+
+**Opção B: Manualmente**
+
+```bash
+cd docs/
+pdflatex projeto_etapa3.tex
+pdflatex projeto_etapa3.tex  # Segunda compilação para referências
+```
+
+**Opção C: Overleaf (online)**
+
+1. Acesse: https://www.overleaf.com/
+2. Faça upload de `docs/projeto_etapa3.tex` e toda a pasta `figs/`
+3. Clique em "Recompile"
+
+**Saída:** `docs/projeto_etapa3.pdf`
+
+### Artefatos da Etapa 3
+
+#### 📊 Visualizações de Storytelling (5 novas figuras)
+- **Linha do tempo de anomalias**: Picos críticos de 2020 e 2024
+- **Séries com envelope sazonal**: Envelopes Q25-Q75 por bioma
+- **Heatmap temporal**: Distribuição de focos por mês/ano
+- **Ranking de criticidade**: Top 15 municípios por número de focos
+- **Anomalias por bioma**: Distribuição de z-scores robustos
+
+#### 📝 Documentação
+- **Documento LaTeX completo**: `docs/projeto_etapa3.tex`
+  - Narrativa estruturada em três atos (Setup, Conflito, Resolução)
+  - Storyboard completo (10 slides)
+  - Roteiro de falas por pessoa
+  - Descrição detalhada de todas as variáveis
+  - Análise completa de valores ausentes e outliers
+- **Scripts de compilação**: `docs/compilar.sh`
+- **Instruções**: `docs/INSTRUCOES_COMPILACAO.md`
+
+#### 💻 Código Python
+- **Script de storytelling**: `src/storytelling_viz.py`
+  - 5 funções de visualização
+  - Código bem documentado
+  - Boas práticas de organização
+- **Scripts auxiliares**: `cleaning.py`, `io_utils.py`, `plotting.py`
+
+#### 📈 Dados Processados
+- **Dataset consolidado**: 2.008.071 registros (2019-2024)
+- **Estatísticas**: Resumos, anomalias, agregações temporais
+- **CSVs processados**: 6 arquivos de análise
+
+### Narrativa de Storytelling
+
+A narrativa segue a estrutura clássica em três atos:
+
+1. **Setup (Slides 1-3)**: Apresentação, contexto dos biomas, dados disponíveis
+2. **Conflito (Slides 4-6)**: Onde está o fogo, sazonalidade, picos anômalos
+3. **Resolução (Slides 7-10)**: Proposta analítica, resultados pretendidos, próximos passos
+
+**Nome do projeto:** "Fogo sob Controle: priorização territorial de focos de queimadas (2019-2024)"
+
+### Checklist da Rubrica - Etapa 3
+
+#### ✅ Esboço do Storytelling (4 pts - ÓTIMO)
+- ✅ Apresentação do grupo
+- ✅ Nome do projeto
+- ✅ Empresa/Organização (INPE)
+- ✅ Área do problema
+- ✅ Descrição do problema/gap
+- ✅ Proposta analítica
+- ✅ Dados disponíveis
+- ✅ Análise exploratória
+- ✅ Resultados pretendidos
+
+#### ✅ Scripts da Análise Exploratória (3 pts - ÓTIMO)
+- ✅ Scripts inseridos no GitHub
+- ✅ Notebooks Jupyter
+- ✅ Escritos em Python
+- ✅ Comentários e boas práticas
+
+#### ✅ Seção de AED no Documento (3 pts - ÓTIMO)
+- ✅ Descrição completa das variáveis
+- ✅ Número de exemplares, máx/min, variância, desvio padrão
+- ✅ Distribuições
+- ✅ Análise de NAs e outliers
+- ✅ Gráficos para detalhar a amostra
+
+### Próximos Passos
+
+1. ✅ **Etapa 3 concluída** - Todos os artefatos implementados
+2. ⏳ **Compilar LaTeX** - Gerar PDF final da Etapa 3
+3. 📊 **Preparar apresentação** - Seguir storyboard do documento LaTeX
+4. 🎯 **Etapa 4** - Ajustes finais e apresentação
+
+## Cronograma (Etapa 1)
+
+Ver `docs/cronograma.md` para atividades, datas, responsáveis e milestones.
