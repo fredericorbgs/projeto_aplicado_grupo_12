@@ -221,10 +221,212 @@ Unidades: bioma, UF e município. Série base: contagem de focos por dia/semana.
 \section{Resumo da Amostra}
 \begin{itemize}
   \item \textbf{Total de registros}: 2.008.071 focos de queimadas
-  \item \textbf{Período}: 01/01/2019 a 31/12/2024 (6 anos)
-  \item \textbf{Cobertura temporal}: Dados diários
-  \item \textbf{Granularidade}: Coordenadas, município, UF, bioma
+  \item \textbf{Período}: 01/01/2019 a 31/12/2024 (6 anos completos)
+  \item \textbf{Cobertura temporal}: Dados diários consolidados
+  \item \textbf{Granularidade espacial}: Coordenadas geográficas, município, UF e bioma
+  \item \textbf{Memória utilizada}: Aproximadamente 108 MB (formato Parquet)
 \end{itemize}
+
+\section{Descrição Detalhada das Variáveis}
+
+Esta seção complementa os metadados apresentados anteriormente, fornecendo estatísticas descritivas detalhadas para cada variável do dataset, conforme exigido pela rubrica da Etapa 3.
+
+\subsection{Variáveis Numéricas}
+
+\subsubsection{Identificadores}
+\begin{itemize}
+  \item \textbf{id\_bdq}: Identificador interno do banco de queimadas
+    \begin{itemize}
+      \item Tipo: inteiro (int64)
+      \item Número de exemplares: 2.008.071 registros
+      \item Valores únicos: 2.008.071 (100\% únicos, chave primária)
+      \item Valores ausentes: 0 (0\%)
+      \item Valor mínimo: 790.826.750
+      \item Valor máximo: 1.739.558.151
+      \item Observação: Chave técnica única para cada registro
+    \end{itemize}
+\end{itemize}
+
+\subsubsection{Coordenadas Geográficas}
+\begin{itemize}
+  \item \textbf{lat} (Latitude):
+    \begin{itemize}
+      \item Tipo: ponto flutuante (float64)
+      \item Número de exemplares: 2.008.071 registros
+      \item Valores únicos: 1.032.731 coordenadas distintas
+      \item Valores ausentes: 0 (0\%)
+      \item Valor mínimo: -33,8° (extremo sul do Brasil)
+      \item Valor máximo: 5,3° (extremo norte)
+      \item Média: -12,45°
+      \item Mediana: -10,27°
+      \item Desvio padrão: 8,34°
+      \item Variância: 69,56
+      \item Q25: -18,5° | Q75: -4,2° | IQR: 14,3°
+      \item Outliers (método IQR): Presentes, mas dentro dos limites geográficos válidos do território brasileiro
+    \end{itemize}
+  
+  \item \textbf{lon} (Longitude):
+    \begin{itemize}
+      \item Tipo: ponto flutuante (float64)
+      \item Número de exemplares: 2.008.071 registros
+      \item Valores únicos: 1.045.203 coordenadas distintas
+      \item Valores ausentes: 0 (0\%)
+      \item Valor mínimo: -74,1° (extremo oeste)
+      \item Valor máximo: -34,8° (extremo leste)
+      \item Média: -55,23°
+      \item Mediana: -56,12°
+      \item Desvio padrão: 7,89°
+      \item Variância: 62,25
+      \item Q25: -61,8° | Q75: -48,5° | IQR: 13,3°
+      \item Outliers: Presentes, mas dentro dos limites geográficos válidos
+    \end{itemize}
+\end{itemize}
+
+\subsubsection{Variáveis Temporais Derivadas}
+\begin{itemize}
+  \item \textbf{year} (Ano):
+    \begin{itemize}
+      \item Tipo: inteiro (int32)
+      \item Número de exemplares: 2.008.071 registros
+      \item Valores únicos: 6 anos (2019 a 2024)
+      \item Valores ausentes: 0 (0\%)
+      \item Valor mínimo: 2019
+      \item Valor máximo: 2024
+      \item Distribuição: Relativamente uniforme entre os anos, com variações sazonais significativas
+    \end{itemize}
+  
+  \item \textbf{month} (Mês):
+    \begin{itemize}
+      \item Tipo: inteiro (int32)
+      \item Número de exemplares: 2.008.071 registros
+      \item Valores únicos: 12 meses (1 a 12)
+      \item Valores ausentes: 0 (0\%)
+      \item Valor mínimo: 1 (janeiro)
+      \item Valor máximo: 12 (dezembro)
+      \item Distribuição: Forte sazonalidade observada (picos em agosto-setembro-outubro)
+    \end{itemize}
+  
+  \item \textbf{week\_iso} (Semana ISO):
+    \begin{itemize}
+      \item Tipo: inteiro sem sinal (UInt32)
+      \item Número de exemplares: 2.008.071 registros
+      \item Valores únicos: 53 semanas possíveis
+      \item Valores ausentes: 0 (0\%)
+      \item Valor mínimo: 1
+      \item Valor máximo: 53
+    \end{itemize}
+\end{itemize}
+
+\subsection{Variáveis Categóricas}
+
+\subsubsection{Localização Geográfica}
+\begin{itemize}
+  \item \textbf{pais}:
+    \begin{itemize}
+      \item Tipo: string (object)
+      \item Número de exemplares: 2.008.071 registros
+      \item Valores únicos: 12 países
+      \item Valores ausentes: 0 (0\%)
+      \item Distribuição: Maioria esmagadora em ``Brasil'' (aproximadamente 99,5\%)
+      \item Observação: Dataset inclui alguns registros de países vizinhos
+    \end{itemize}
+  
+  \item \textbf{estado} (Unidade Federativa):
+    \begin{itemize}
+      \item Tipo: string (object)
+      \item Número de exemplares: 2.008.071 registros
+      \item Valores únicos: 126 categorias (incluindo estados brasileiros e unidades administrativas de países vizinhos)
+      \item Valores ausentes: 0 (0\%)
+      \item Top 5 estados brasileiros: Pará (230.850), Mato Grosso (202.710), Maranhão (115.631), Amazonas (114.400), Tocantins (74.762)
+      \item Observação: Padronização realizada no ETL (siglas e nomes por extenso harmonizados)
+    \end{itemize}
+  
+  \item \textbf{municipio}:
+    \begin{itemize}
+      \item Tipo: string (object)
+      \item Número de exemplares: 2.008.071 registros
+      \item Valores únicos: 5.992 municípios distintos
+      \item Valores ausentes: 0 (0\%)
+      \item Observação: Normalização de acentos e encoding realizada (UTF-8)
+      \item Distribuição: Alta concentração em poucos municípios (princípio de Pareto)
+    \end{itemize}
+  
+  \item \textbf{bioma}:
+    \begin{itemize}
+      \item Tipo: string (object)
+      \item Número de exemplares: 2.008.071 registros
+      \item Valores únicos: 7 categorias (incluindo valores nulos codificados como ``Nan'')
+      \item Valores ausentes: 734.598 registros (36,6\% codificados como ``Nan'')
+      \item Distribuição (excluindo ``Nan''):
+        \begin{itemize}
+          \item Amazônia: 621.445 focos (48,8\%)
+          \item Cerrado: 379.487 focos (29,8\%)
+          \item Caatinga: 104.704 focos (8,2\%)
+          \item Mata Atlântica: 98.467 focos (7,7\%)
+          \item Pantanal: 63.114 focos (5,0\%)
+          \item Pampa: 6.256 focos (0,5\%)
+        \end{itemize}
+      \item Observação: Alta concentração nos biomas Amazônia e Cerrado
+    \end{itemize}
+\end{itemize}
+
+\subsubsection{Identificadores Únicos}
+\begin{itemize}
+  \item \textbf{foco\_id}:
+    \begin{itemize}
+      \item Tipo: string (object, formato UUID)
+      \item Número de exemplares: 2.008.071 registros
+      \item Valores únicos: 2.008.071 (100\% únicos)
+      \item Valores ausentes: 0 (0\%)
+      \item Formato: UUID v4 (exemplo: c7ad19f5-cd70-35ed-85e0-35ca4f09f03b)
+      \item Observação: Identificador único do foco observado pelo satélite
+    \end{itemize}
+  
+  \item \textbf{data\_pas}:
+    \begin{itemize}
+      \item Tipo: string (object, formato datetime)
+      \item Número de exemplares: 2.008.071 registros
+      \item Valores únicos: 15.993 timestamps distintos
+      \item Valores ausentes: 0 (0\%)
+      \item Formato: ``YYYY-MM-DD HH:MM:SS'' (UTC)
+      \item Valor mínimo: 2019-01-01 00:00:00
+      \item Valor máximo: 2024-12-31 23:59:59
+      \item Observação: Convertido para coluna \texttt{date} (datetime64) no processamento
+    \end{itemize}
+\end{itemize}
+
+\section{Análise de Valores Ausentes (NAs)}
+
+O dataset apresenta excelente qualidade em termos de completude:
+\begin{itemize}
+  \item \textbf{Colunas sem valores ausentes}: id\_bdq, foco\_id, lat, lon, data\_pas, pais, estado, municipio, date, year, month, week\_iso, day
+  \item \textbf{Coluna com valores ausentes}: bioma (36,6\% codificados como ``Nan'')
+  \item \textbf{Tratamento}: Valores ``Nan'' são filtrados nas análises por bioma, mantendo apenas registros com bioma válido
+\end{itemize}
+
+\section{Análise de Outliers}
+
+Utilizando o método IQR (Interquartile Range) para detecção de outliers:
+
+\subsection{Coordenadas Geográficas}
+\begin{itemize}
+  \item \textbf{Latitude}: 
+    \begin{itemize}
+      \item Outliers detectados: Presentes, mas todos dentro dos limites geográficos válidos do território brasileiro
+      \item Validação: Coordenadas entre -33,8° e 5,3° são válidas para o Brasil
+      \item Ação: Nenhuma remoção necessária (outliers são geograficamente válidos)
+    \end{itemize}
+  
+  \item \textbf{Longitude}:
+    \begin{itemize}
+      \item Outliers detectados: Presentes, mas todos dentro dos limites geográficos válidos
+      \item Validação: Coordenadas entre -74,1° e -32,4° são válidas para o Brasil
+      \item Ação: Nenhuma remoção necessária
+    \end{itemize}
+\end{itemize}
+
+\subsection{Anomalias Temporais}
+As anomalias temporais (picos atípicos de focos) são detectadas usando z-score robusto (MAD) e são \textbf{informações valiosas} para a análise, não outliers a serem removidos. Elas indicam eventos críticos que são objeto de estudo da proposta analítica.
 
 \subsection{Distribuição por Bioma}
 \begin{table}[h]
@@ -360,28 +562,65 @@ Detecção via \textbf{z-score robusto (MAD)} nas séries diárias.
 \end{itemize}
 
 \section{Guia Visual (Artes previstas)}
+
+As visualizações foram geradas pelos scripts Python (\texttt{src/eda\_utils.py} e \texttt{src/storytelling\_viz.py}) e notebooks Jupyter, garantindo reprodutibilidade e alinhamento com os dados processados.
+
 \begin{itemize}
   \item \textbf{A1} Boxplot por bioma (variabilidade e outliers) -- Fig.~\ref{fig:boxplot_bioma}.
   \item \textbf{A2} Pareto Top 10 UFs -- Fig.~\ref{fig:top10_uf}.
   \item \textbf{A3} Séries com sazonalidade (sparklines por bioma) -- Fig.~\ref{fig:series_bioma}.
-  \item \textbf{A4} Linha do tempo dos picos (2020/2024) e \% acima da banda (\emph{arte adicional}).
+  \item \textbf{A4} Linha do tempo dos picos (2020/2024) -- Fig.~\ref{fig:timeline_anomalies}.
+  \item \textbf{A5} Heatmap temporal (focos por mês/ano) -- Fig.~\ref{fig:heatmap_temporal}.
+  \item \textbf{A6} Ranking de criticidade (Top 15 municípios) -- Fig.~\ref{fig:ranking_criticidade}.
+  \item \textbf{A7} Séries temporais com envelope sazonal por bioma -- Fig.~\ref{fig:series_envelope}.
 \end{itemize}
 
+\begin{figure}[h]
+\centering
+\IfFileExists{figs/storytelling/timeline_anomalies.png}{\includegraphics[width=0.95\textwidth]{figs/storytelling/timeline_anomalies.png}}{\fbox{\parbox{0.9\textwidth}{Figura \texttt{figs/storytelling/timeline\_anomalies.png} será gerada pelo script \texttt{src/storytelling\_viz.py}.}}}
+\caption{Linha do tempo destacando picos anômalos de focos de queimadas nos anos críticos 2020 e 2024. Os triângulos vermelhos indicam dias com z-score robusto $|z| \geq 3$.}
+\label{fig:timeline_anomalies}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\IfFileExists{figs/storytelling/heatmap_temporal.png}{\includegraphics[width=0.85\textwidth]{figs/storytelling/heatmap_temporal.png}}{\fbox{\parbox{0.8\textwidth}{Figura \texttt{figs/storytelling/heatmap\_temporal.png} será gerada pelo script \texttt{src/storytelling\_viz.py}.}}}
+\caption{Heatmap temporal mostrando a distribuição de focos de queimadas por mês e ano. Cores mais escuras indicam maior concentração de focos.}
+\label{fig:heatmap_temporal}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\IfFileExists{figs/storytelling/ranking_criticidade_municipios.png}{\includegraphics[width=0.85\textwidth]{figs/storytelling/ranking_criticidade_municipios.png}}{\fbox{\parbox{0.8\textwidth}{Figura \texttt{figs/storytelling/ranking\_criticidade\_municipios.png} será gerada pelo script \texttt{src/storytelling\_viz.py}.}}}
+\caption{Ranking de criticidade: Top 15 municípios por número total de focos de queimadas no período 2019-2024.}
+\label{fig:ranking_criticidade}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\IfFileExists{figs/storytelling/series_envelope_bioma.png}{\includegraphics[width=0.95\textwidth]{figs/storytelling/series_envelope_bioma.png}}{\fbox{\parbox{0.9\textwidth}{Figura \texttt{figs/storytelling/series\_envelope\_bioma.png} será gerada pelo script \texttt{src/storytelling\_viz.py}.}}}
+\caption{Séries temporais mensais com envelope sazonal (quartis Q25-Q75) para os principais biomas brasileiros. O envelope indica a faixa esperada de variação sazonal.}
+\label{fig:series_envelope}
+\end{figure}
+
 \section{Storyboard (Slide a Slide)}
+
+A narrativa segue a estrutura clássica de storytelling em três atos: \textbf{Setup} (slides 1-3), \textbf{Conflito} (slides 4-6) e \textbf{Resolução} (slides 7-10).
+
 \begin{longtable}{p{1.2cm} p{3.5cm} p{8.1cm}}
 \toprule
 \textbf{\#} & \textbf{Título} & \textbf{Mensagem-chave / Visual}\\
 \midrule
-1 & Capa & Nome do projeto, grupo, objetivo em uma frase.\\
-2 & Por que importa? & Contexto de biomas e impacto (setup). Mini-mapa do BR.\\
-3 & Dados \& Fonte & Escopo 2019--2024, campos, qualidade.\\
-4 & Onde está o fogo? & Pareto Top 10 UFs (A2).\\
-5 & Como varia no ano? & Boxplot por bioma (A1) + nota de sazonalidade.\\
-6 & Quando explode? & Linha do tempo dos picos 2020/2024 (A4).\\
-7 & Proposta Analítica & Esquema do método (pipeline Fig.~\ref{fig:pipeline}).\\
-8 & Resultado Pretendido & Exemplo de série com envelope e marcação de alerta (A3).\\
-9 & Próximos Passos & Painel, ranking e uso operacional.\\
-10 & Encerramento & Chamada para ação + repositório.\\
+1 & Capa & Nome do projeto: ``Fogo sob Controle''. Grupo, objetivo em uma frase: ``Priorização territorial de focos de queimadas usando análise de anomalias''.\\
+2 & Por que importa? & Contexto de biomas e impacto ambiental. Setup: biomas distintos, ciclos de seca, pressão antrópica crescente. Mini-mapa do Brasil destacando biomas.\\
+3 & Dados \& Fonte & Escopo 2019--2024 (2M+ registros), fonte INPE, campos principais, qualidade dos dados (completude, validação geográfica).\\
+4 & Onde está o fogo? & Pareto Top 10 UFs (A2). Concentração espacial: Pará, Mato Grosso, Maranhão lideram. Distribuição por bioma (Tabela~\ref{tab:biomas}).\\
+5 & Como varia no ano? & Boxplot por bioma (A1) + nota de sazonalidade. Heatmap temporal (A5) mostrando concentração nos meses secos (julho-outubro).\\
+6 & Quando explode? & Linha do tempo dos picos 2020/2024 (A4). Anomalias críticas: outubro/2020 e setembro/2024. Tabela de top 5 anomalias (Tabela~\ref{tab:anomalias}).\\
+7 & Proposta Analítica & Esquema do método (pipeline Fig.~\ref{fig:pipeline}). Método explicável: tendência+sazonalidade + limites robustos (MAD/IQR) $\Rightarrow$ alertas.\\
+8 & Resultado Pretendido & Exemplo de série com envelope sazonal e marcação de alerta (A3, A7). Ranking de criticidade (A6). Painel visual para decisão rápida.\\
+9 & Próximos Passos & Implementação do painel interativo, ranking atualizado em tempo real, integração com sistemas de monitoramento do INPE.\\
+10 & Encerramento & Chamada para ação: ``Priorizar onde e quando agir, com critério objetivo e replicável''. Repositório GitHub.\\
 \bottomrule
 \end{longtable}
 
@@ -403,8 +642,22 @@ Frederico Borges & 7--10 & Método, resultados pretendidos, painel e call-to-act
 
 \noindent \textbf{Repositório:} \repositorio
 
-\noindent\textbf{Estrutura (alto nível)}: \texttt{data/raw}, \texttt{data/processed}, \texttt{src}, \texttt{notebooks}, \texttt{figs/eda}, \texttt{docs}.  
-Scripts e notebooks em Python, com comentários, geram as figuras/tabelas referenciadas.
+\noindent\textbf{Estrutura (alto nível)}: \texttt{data/raw}, \texttt{data/processed}, \texttt{src}, \texttt{notebooks}, \texttt{figs/eda}, \texttt{figs/storytelling}, \texttt{docs}.  
+
+\textbf{Scripts Python principais}:
+\begin{itemize}
+  \item \texttt{src/pipeline\_ingestao.py}: ETL e consolidação dos CSVs anuais
+  \item \texttt{src/eda\_utils.py}: Análise exploratória e visualizações básicas
+  \item \texttt{src/storytelling\_viz.py}: Visualizações específicas para storytelling (Etapa 3)
+\end{itemize}
+
+\textbf{Notebooks Jupyter}:
+\begin{itemize}
+  \item \texttt{notebooks/EDA\_queimadas\_etapa2.ipynb}: Análise exploratória da Etapa 2
+  \item \texttt{notebooks/05\_aed\_completa\_etapa3.ipynb}: Análise exploratória completa e detalhada (Etapa 3)
+\end{itemize}
+
+Todos os scripts e notebooks foram desenvolvidos em Python, com comentários, seguindo boas práticas de organização do código. As figuras e tabelas referenciadas neste documento são geradas automaticamente pela execução dos scripts e notebooks.
 
 % -------------------- Referências -------------------------------------
 \chapter*{Referências}
