@@ -347,9 +347,66 @@ A narrativa segue a estrutura clássica em três atos:
 ### Próximos Passos
 
 1. ✅ **Etapa 3 concluída** - Todos os artefatos implementados
-2. ⏳ **Compilar LaTeX** - Gerar PDF final da Etapa 3
-3. 📊 **Preparar apresentação** - Seguir storyboard do documento LaTeX
-4. 🎯 **Etapa 4** - Ajustes finais e apresentação
+2. ✅ **Compilar LaTeX** - Gerar PDF final da Etapa 3
+3. ✅ **Preparar apresentação** - Seguir storyboard do documento LaTeX
+4. ✅ **Etapa 4** - Ajustes finais e apresentação
+
+## Etapa 4 - Entrega Final ✅
+
+### Apresentação Gravada
+
+**Vídeo no YouTube:** [Assistir Apresentação](https://www.youtube.com/watch?v=a1U5Kp_8TQI)
+
+A apresentação do projeto foi gravada e disponibilizada no YouTube, com duração entre 5 e 10 minutos, apresentando todos os elementos solicitados:
+- ✅ Apresentação do grupo
+- ✅ Nome do projeto: "Fogo sob Controle: priorização territorial de focos de queimadas (2019-2024)"
+- ✅ Empresa/Organização de estudo: INPE - Programa Queimadas
+- ✅ Área do problema: Monitoramento ambiental e gestão de riscos
+- ✅ Descrição do problema/gap
+- ✅ Proposta analítica
+- ✅ Dados disponíveis
+- ✅ Análise exploratória
+- ✅ Resultados pretendidos
+
+### Documento Final
+
+O documento final do projeto está disponível no repositório:
+
+- **Apresentação (Slides):** [`entrega_final/Fogo_sob_Controle_Priorização_de_Queimadas.pdf`](entrega_final/Fogo_sob_Controle_Priorização_de_Queimadas.pdf)
+- **Relatório Final:** [`entrega_final/Etapa_Final.pdf`](entrega_final/Etapa_Final.pdf)
+
+### Estrutura da Entrega Final
+
+```
+projeto_aplicado_grupo_12/
+├── entrega_final/                    # ⭐ NOVO - Entrega Final
+│   ├── Fogo_sob_Controle_Priorização_de_Queimadas.pdf  # Apresentação
+│   └── Etapa_Final.pdf               # Relatório Final
+└── ...
+```
+
+### Checklist da Rubrica - Etapa 4
+
+#### ✅ Apresentação Gravada (5 pts - ÓTIMO)
+- ✅ Apresentação disponibilizada no YouTube
+- ✅ Link disponibilizado no GitHub (README.md)
+- ✅ Duração entre 5 e 10 minutos
+- ✅ Apresenta todos os elementos solicitados:
+  - ✅ Apresentação do grupo
+  - ✅ Nome do projeto
+  - ✅ Empresa/Organização de estudo
+  - ✅ Área do problema
+  - ✅ Descrição do problema/gap
+  - ✅ Proposta analítica
+  - ✅ Dados disponíveis
+  - ✅ Análise exploratória
+  - ✅ Resultados pretendidos
+
+#### ✅ Documento Final (5 pts - ÓTIMO)
+- ✅ Documento encaminhado no Canvas
+- ✅ Documento inserido no GitHub (`entrega_final/`)
+- ✅ Documento devidamente organizado
+- ✅ Apresenta todos os elementos solicitados no início do projeto
 
 ## Cronograma (Etapa 1)
 
